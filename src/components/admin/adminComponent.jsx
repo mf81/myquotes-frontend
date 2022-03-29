@@ -30,6 +30,7 @@ const AdminComponent = () => {
   };
 
   useEffect(() => {
+    console.log("reander");
     getUsers();
   }, []);
 
