@@ -5,6 +5,7 @@ import api from "../../apiService/api";
 import joiValidator from "./joiValidator";
 import AddUserComponent from "./addUserComponent";
 import TableUsersComponent from "./tableUsersComponent";
+import UsersContext from "../../contexts/usersContext";
 
 const AdminComponent = () => {
   const userModel = {
@@ -14,11 +15,10 @@ const AdminComponent = () => {
     passwordConfirm: "",
     role: "",
   };
-
-  const [usersApp, setUsersApp] = useState([]);
+  const [usersApp, setUsersApp, refUsersApp] = useState([]);
   const [newUser, setNewUser] = useState(userModel);
-  const [errorState, setErrorState, refErrorState] = useState(userModel);
-  const [errorBoolean, setErrorBoolean, refErrorBoolean] = useState();
+  const [, setErrorState, refErrorState] = useState(userModel);
+  const [, setErrorBoolean, refErrorBoolean] = useState();
   const { token } = useContext(StateContext);
 
   const getUsers = async () => {
@@ -43,7 +43,7 @@ const AdminComponent = () => {
     setNewUser({ ...newUser, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmitAdd = async (e) => {
     e.preventDefault();
     if (!refErrorBoolean.current) {
       const oldValue = [...usersApp];
@@ -61,14 +61,29 @@ const AdminComponent = () => {
     <>
       {token && token.role === "admin" && (
         <>
-          <AddUserComponent
-            newUser={newUser}
-            handleSubmit={handleSubmit}
-            changeValue={changeValue}
-            refErrorState={refErrorState.current}
-            refErrorBoolean={refErrorBoolean.current}
-          />
-          <TableUsersComponent usersApp={usersApp} />
+          <UsersContext.Provider
+            value={{
+              usersApp,
+              refUsersApp,
+              setUsersApp,
+              newUser,
+              setNewUser,
+              handleSubmitAdd,
+              changeValue,
+              refErrorState: refErrorState.current,
+              refErrorBoolean: refErrorBoolean.current,
+            }}
+          >
+            <AddUserComponent />
+            <TableUsersComponent
+              usersApp={usersApp}
+              newUser={newUser}
+              handleSubmit={null}
+              changeValue={changeValue}
+              refErrorState={refErrorState.current}
+              refErrorBoolean={refErrorBoolean.current}
+            />
+          </UsersContext.Provider>
         </>
       )}
     </>

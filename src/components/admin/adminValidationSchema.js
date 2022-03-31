@@ -1,5 +1,6 @@
 import Joi from "joi";
 const schema = Joi.object().keys({
+  _id: Joi.string(),
   name: Joi.string().required().max(10).messages({
     "string.base": `Pole musi być tekstem`,
     "string.empty": `Pole nie może być puste`,

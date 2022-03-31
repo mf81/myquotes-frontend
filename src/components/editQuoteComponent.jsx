@@ -3,13 +3,8 @@ import InputComponent from "./inputComponent";
 import StateContext from "../contexts/stateContext";
 
 const EditQuoteComponent = (props) => {
-  const {
-    texts,
-    handleEditSubmit,
-    handleEditChange,
-    quoteValue,
-    setQuoteValue,
-  } = useContext(StateContext);
+  const { texts, handleEditChange, quoteValue, setQuoteValue } =
+    useContext(StateContext);
 
   useEffect(() => {
     const y = [...texts];
@@ -20,7 +15,6 @@ const EditQuoteComponent = (props) => {
   return (
     <>
       <form>
-        {/* onSubmit={(e) => handleEditSubmit(e, props.textItem._id)}> */}
         <InputComponent
           value={quoteValue.text}
           onChange={handleEditChange}

@@ -1,7 +1,7 @@
 import schema from "./adminValidationSchema";
 
 const joiValidator = (stateToVaid, errorModel) => {
-  const { error, value: val } = schema.validate(stateToVaid, {
+  const { error } = schema.validate(stateToVaid, {
     abortEarly: false,
   });
 

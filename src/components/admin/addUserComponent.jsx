@@ -1,17 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import WindowComponent from "../windowComponent";
 import InputComponent from "../inputComponent";
+import UsersContext from "../../contexts/usersContext";
 
-const AddUserComponent = (props) => {
-  const { handleSubmit, changeValue, newUser, refErrorState, refErrorBoolean } =
-    props;
+const AddUserComponent = () => {
+  const {
+    handleSubmitAdd,
+    changeValue,
+    newUser,
+    refErrorState,
+    refErrorBoolean,
+  } = useContext(UsersContext);
   return (
     <WindowComponent
-      submit={(e) => handleSubmit(e)}
+      submit={(e) => handleSubmitAdd(e)}
       buttonName="Add User"
       buttonDisable={refErrorBoolean}
     >
-      <form onSubmit={(e) => handleSubmit(e)}>
+      <form onSubmit={(e) => handleSubmitAdd(e)}>
         <InputComponent
           value={newUser.name}
           onChange={(e) => changeValue(e)}

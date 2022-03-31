@@ -7,6 +7,7 @@ import Login from "./loginForm";
 import Logout from "./logout";
 import auth from "../services/authService";
 import NavBar from "./navBarComponent";
+import _ from "lodash";
 
 import { Route, Routes, useLocation } from "react-router-dom";
 
@@ -76,14 +77,15 @@ const Main = () => {
   const handleEditSubmit = async (e, id) => {
     e.preventDefault();
     try {
-      const result = await api.put("/texts/", id, { text: quoteValue.text });
-      setTexts((oldTexts) => {
-        const y = [...oldTexts];
-        let t = y.find((t) => t._id === id);
-        t.text = quoteValue.text;
-        return [...oldTexts];
-      });
-    } catch (error) {}
+      await api.put("/texts/", id, _.pick(quoteValue, ["text"]));
+      const pickedQuoteValue = _.pick(quoteValue, ["text"]);
+      const index = texts.findIndex((obj) => obj._id === id);
+      const copyTexts = texts;
+      copyTexts[index] = pickedQuoteValue;
+      setTexts([...copyTexts]);
+    } catch (error) {
+      console.log("submit error", error);
+    }
   };
 
   const deleteQuote = async (id) => {
