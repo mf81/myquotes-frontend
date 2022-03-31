@@ -12,7 +12,11 @@ const WindowComponent = (props) => {
   return (
     <Container fluid="md">
       {token && (
-        <Button variant="primary" onClick={handleShow}>
+        <Button
+          variant="primary"
+          onClick={handleShow}
+          className="btn btn-primary btn-sm"
+        >
           {props.buttonName}
         </Button>
       )}

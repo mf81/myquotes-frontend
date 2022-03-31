@@ -57,6 +57,17 @@ const AdminComponent = () => {
     } else setNewUser(userModel);
   };
 
+  const deleteUser = async (id) => {
+    const oldValue = [...usersApp];
+    const newValue = oldValue.filter((u) => u._id !== id);
+    setUsersApp(newValue);
+    try {
+      await api.delete("/users/" + id);
+    } catch (error) {
+      setUsersApp(oldValue);
+    }
+  };
+
   return (
     <>
       {token && token.role === "admin" && (
@@ -69,6 +80,7 @@ const AdminComponent = () => {
               newUser,
               setNewUser,
               handleSubmitAdd,
+              deleteUser,
               changeValue,
               refErrorState: refErrorState.current,
               refErrorBoolean: refErrorBoolean.current,

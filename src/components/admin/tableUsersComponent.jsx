@@ -5,8 +5,7 @@ import EditUserComponent from "./editUserComponent";
 import UsersContext from "../../contexts/usersContext";
 
 const TableUsersComponent = () => {
-  const { usersApp, refUsersApp } = useContext(UsersContext);
-  console.log("usersApp z table", usersApp);
+  const { usersApp, deleteUser } = useContext(UsersContext);
   return (
     <>
       <Container>
@@ -34,7 +33,12 @@ const TableUsersComponent = () => {
                       <EditUserComponent id={user._id} />
                     </td>
                     <td>
-                      <Button variant="danger">Delete</Button>
+                      <Button
+                        onClick={() => deleteUser(user._id)}
+                        className="btn btn-danger btn-sm"
+                      >
+                        Delete
+                      </Button>
                     </td>
                   </tr>
                 ))}
